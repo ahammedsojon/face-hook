@@ -1,41 +1,39 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useReducer } from "react";
 import useAuth from "../hooks/useAtuh";
 import useAxios from "../hooks/useAxios";
+import useProfile from "../hooks/useProfile";
+import actions from "../actions";
+import ProfileInfo from "../components/profile/ProfileInfo";
+import MyPosts from "../components/profile/MyPosts";
 
 const Home = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [user, setUser] = useState({});
-  const [posts, setPosts] = useState([]);
   const { auth } = useAuth();
   const { api } = useAxios();
+  const { state, dispatch } = useProfile();
   useEffect(() => {
-    setLoading(true);
     const fetchProfile = async () => {
+      dispatch({ type: actions.profile.DATA_FETCHING });
       try {
         const response = await api.get(`profile/${auth.user.id}`);
-        setUser(response?.data?.user);
-        setPosts(response?.data?.posts);
+        console.log(response.data);
+        if (response.status === 200) {
+          dispatch({ type: actions.profile.DATA_FETCHED, data: response.data });
+        }
       } catch (error) {
-        console.log(error);
-        setError(error);
-      } finally {
-        setLoading(false);
+        dispatch({ type: actions.profile.DATA_ERROR, error: error.message });
       }
     };
 
     fetchProfile();
   }, [auth.user.id, api]);
 
-  if (loading) {
-    return <div>Fetching your profile data...</div>;
+  if (state?.loading) {
+    return <div>{state?.loading}</div>;
   }
   return (
     <>
-      <p>Welcome {user.firstName}, to your profile.</p>
-      <p>You have {posts.length} post.</p>
-      <Link to="/">Go to Home</Link>
+      <ProfileInfo />
+      <MyPosts />
     </>
   );
 };
