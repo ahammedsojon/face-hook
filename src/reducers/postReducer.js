@@ -3,29 +3,27 @@ import actions from "../actions";
 const initialState = {
   loading: false,
   error: null,
-  user: null,
   posts: [],
 };
 
-const profileReducer = (state, action) => {
+const postReducer = (state, action) => {
   switch (action.type) {
-    case actions.profile.DATA_FETCHING: {
+    case actions.posts.DATA_FETCHING: {
       return {
         ...state,
         loading: true,
       };
     }
 
-    case actions.profile.DATA_FETCHED: {
+    case actions.posts.DATA_FETCHED: {
       return {
         ...state,
         loading: false,
-        user: action.data.user,
-        posts: action.data.posts,
+        posts: action.data,
       };
     }
 
-    case actions.profile.DATA_FETCH_ERROR: {
+    case actions.posts.DATA_FETCH_ERROR: {
       return {
         ...state,
         loading: false,
@@ -33,22 +31,27 @@ const profileReducer = (state, action) => {
       };
     }
 
-    case actions.profile.DATA_EDITED: {
+    case actions.posts.DATA_CREATED: {
       return {
         ...state,
         loading: false,
-        user: action.data,
+        posts: [...state.posts, action.data],
       };
     }
 
-    case actions.profile.IMAGE_UPDATED: {
+    case actions.posts.DATA_EDITED: {
       return {
         ...state,
         loading: false,
-        user: {
-          ...state.user,
-          avatar: action.data.avatar,
-        },
+        posts: action.data,
+      };
+    }
+
+    case actions.posts.DATA_DELETED: {
+      return {
+        ...state,
+        loading: false,
+        posts: state.posts.filter((post) => post.id !== action.data),
       };
     }
 
@@ -57,4 +60,4 @@ const profileReducer = (state, action) => {
   }
 };
 
-export { initialState, profileReducer };
+export { initialState, postReducer };

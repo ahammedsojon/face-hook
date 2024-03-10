@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Auth from "../assets/icons/registration.svg";
-import LoginForm from "../components/auth/LoginForm";
+import Registration from "../assets/icons/registration.svg";
+import RegisterForm from "../components/auth/RegisterForm";
 
 const Login = () => {
   return (
@@ -9,29 +9,29 @@ const Login = () => {
         <div className="container grid items-center gap-8 lg:grid-cols-2">
           <div>
             <img
-              className="mb-12 max-w-full max-lg:hidden"
-              src={Auth}
+              className="mb-12 h-60"
+              src={Registration}
               alt="auth_illustration"
             />
             <div>
               <h1 className="mb-3 text-4xl font-bold lg:text-[40px]">
                 Facehook
               </h1>
-              <p className="max-w-[452px] text-gray-600/95 lg:text-lg">
+              <p className="max-w-[452px] text-gray-400/95 lg:text-lg">
                 Create a social media app with features like, showing the post,
                 post details, reactions, comments and profile.
               </p>
             </div>
           </div>
           <div className="card">
-            <LoginForm />
+            <RegisterForm />
 
             <div className="py-4 lg:py-4">
               <p className="text-center text-xs text-gray-600/95 lg:text-sm">
                 Already have an account?
                 <Link
                   to="/login"
-                  class="hover:text-lwsGreen text-white transition-all hover:underline"
+                  className="hover:text-lwsGreen text-white transition-all hover:underline"
                 >
                   Login
                 </Link>

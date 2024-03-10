@@ -35,7 +35,7 @@ const useAxios = () => {
             });
 
             const { token } = resonse.data;
-            console.log(`New token: ${token}`);
+            `New token: ${token}`;
             setAuth({ ...auth, authToken: token });
             originalRequest.headers.Authorization = `Bearer ${token}`;
             return api(originalRequest);

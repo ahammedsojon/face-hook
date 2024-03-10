@@ -6,7 +6,6 @@ import useProfile from "../hooks/useProfile";
 
 const PrivateRoute = () => {
   const { auth } = useAuth();
-  console.log(auth);
   return (
     <>
       {auth?.authToken ? (
